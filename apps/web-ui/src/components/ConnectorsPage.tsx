@@ -145,6 +145,7 @@ function ConnectorRow({ server, onChanged, onNotice }: { server: McpConnectorSta
 					<button
 						className="inline-action"
 						disabled={busy !== null}
+						title="Check the server is reachable and list its tools"
 						onClick={() => void run("test", async () => {
 							const result = await testMcpServer(server.name);
 							setBusy(null);
@@ -223,7 +224,7 @@ function ConnectorRow({ server, onChanged, onNotice }: { server: McpConnectorSta
 							>
 								{busy === "remove" ? "Removing…" : `Remove ${server.name}`}
 							</button>
-							<button className="inline-action connector-action-quiet" disabled={busy !== null} onClick={() => setConfirmRemove(false)}>Keep</button>
+							<button className="inline-action connector-action-quiet" disabled={busy !== null} title="Cancel — keep this connector" onClick={() => setConfirmRemove(false)}>Keep</button>
 						</>
 					) : (
 						<button className="inline-action connector-action-quiet" disabled={busy !== null} onClick={() => setConfirmRemove(true)}>Remove</button>

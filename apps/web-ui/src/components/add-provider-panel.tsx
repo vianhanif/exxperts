@@ -275,7 +275,7 @@ export function ConfigureProfileModal({ providerId, providerName, existingProfil
 							</div>
 							<div className="configure-profile-field">
 								<h3>Memorize</h3>
-								<select className="configure-profile-select" value={learnModel} onChange={(e) => setLearnModel(e.target.value)} aria-label="Memorize model">
+								<select className="configure-profile-select" value={learnModel} onChange={(e) => setLearnModel(e.target.value)} aria-label="Memorize model" title="The model that turns remembered sessions into lasting memory">
 									{catalog.models.map((model) => (
 										<option key={model.id} value={model.id}>{catalogModelName(model)}{model.suggestedDefault ? " (suggested)" : ""}</option>
 									))}
@@ -283,7 +283,7 @@ export function ConfigureProfileModal({ providerId, providerName, existingProfil
 							</div>
 							<div className="configure-profile-field">
 								<h3>Review</h3>
-								<select className="configure-profile-select" value={reviewMemoryModel} onChange={(e) => setReviewMemoryModel(e.target.value)} aria-label="Review model">
+								<select className="configure-profile-select" value={reviewMemoryModel} onChange={(e) => setReviewMemoryModel(e.target.value)} aria-label="Review model" title="The model that reviews and tidies long-term memory">
 									{catalog.models.map((model) => (
 										<option key={model.id} value={model.id}>{catalogModelName(model)}{model.suggestedDefault ? " (suggested)" : ""}</option>
 									))}
@@ -477,6 +477,7 @@ export function GatewayModelApprovalList({ drafts, onChange, ariaLabel }: {
 						<label className="gateway-model-window">
 							<span className="gateway-model-window-label">context</span>
 							<input
+								title="How many tokens the model can hold — drives the room's context meter and compaction"
 								className={`launcher-path-input gateway-model-window-input${windowError ? " invalid" : ""}`}
 								type="text"
 								inputMode="numeric"
@@ -713,7 +714,7 @@ export function GatewayConfigModal({ gatewayId, knownLabel, onClose, onSaved }: 
 					</div>
 					<div className="configure-profile-field">
 						<h3>Memorize &amp; Review</h3>
-						<select className="configure-profile-select" value={effectiveMaintenanceModel} onChange={(e) => setMaintenanceModel(e.target.value)} aria-label="Maintenance model" disabled={approvedIds.length === 0}>
+						<select className="configure-profile-select" value={effectiveMaintenanceModel} onChange={(e) => setMaintenanceModel(e.target.value)} aria-label="Maintenance model" title="The model that runs Memorize and Review" disabled={approvedIds.length === 0}>
 							{approvedIds.map((id) => (
 								<option key={id} value={id}>{catalogModelName({ id })}</option>
 							))}
@@ -906,7 +907,7 @@ export function GatewayApproveModelsModal({ gatewayId, onClose, onSaved }: { gat
 							</div>
 							<div className="configure-profile-field">
 								<h3>Memorize and Review</h3>
-								<select className="configure-profile-select" value={effectiveMaintenanceModel} onChange={(e) => setMaintenanceModel(e.target.value)} aria-label="Maintenance model" disabled={approvedIds.length === 0}>
+								<select className="configure-profile-select" value={effectiveMaintenanceModel} onChange={(e) => setMaintenanceModel(e.target.value)} aria-label="Maintenance model" title="The model that runs Memorize and Review" disabled={approvedIds.length === 0}>
 									{approvedIds.map((id) => (
 										<option key={id} value={id}>{catalogModelName({ id })}</option>
 									))}
