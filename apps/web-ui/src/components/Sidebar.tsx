@@ -1,19 +1,20 @@
 import { SidebarToggleButton } from "../sidebar-collapse";
-import { ConfigMenu, type ThemeMode } from "./product-shell";
+import { ConfigMenu, type AppearancePreference, type ThemeMode } from "./product-shell";
 
 import type { ReactNode } from "react";
 
 interface Props {
 	onHome: () => void;
 	theme: ThemeMode;
-	onToggleTheme: () => void;
+	appearance: AppearancePreference;
+	onSetAppearance: (pref: AppearancePreference) => void;
 	/** Leaves the room first, then opens AI setup. The caller guards on the leave. */
 	onAiSetup: () => void;
 	/** The Assets section (contract §2 rung 3) — the rail's first occupant below Home. */
 	assetsSlot?: ReactNode;
 }
 
-export function Sidebar({ theme, onToggleTheme, onAiSetup, onHome, assetsSlot }: Props) {
+export function Sidebar({ theme, appearance, onSetAppearance, onAiSetup, onHome, assetsSlot }: Props) {
 	return (
 		<aside className="sidebar">
 			<div className="sidebar-header">
@@ -30,7 +31,7 @@ export function Sidebar({ theme, onToggleTheme, onAiSetup, onHome, assetsSlot }:
 			    affordance sits on the composer, where it can actually act. */}
 			<div className="sidebar-footer">
 				<div className="sidebar-footer-controls">
-					<ConfigMenu onAiSetup={onAiSetup} theme={theme} onToggleTheme={onToggleTheme} />
+					<ConfigMenu onAiSetup={onAiSetup} appearance={appearance} onSetAppearance={onSetAppearance} />
 					<SidebarToggleButton />
 				</div>
 			</div>

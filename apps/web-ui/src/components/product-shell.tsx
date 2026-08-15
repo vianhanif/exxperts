@@ -5,6 +5,8 @@ import { requestUpdate, useUpdateNotice } from "../update-notice";
 import { Help } from "./Help";
 
 export type ThemeMode = "dark" | "light";
+/** What the user picked in the Appearance control; "system" resolves to a ThemeMode via prefers-color-scheme. */
+export type AppearancePreference = ThemeMode | "system";
 
 // Injected at build time from the root package.json "version" field (vite define).
 const APP_VERSION = __APP_VERSION__;
@@ -37,7 +39,7 @@ export type ProductSidebarActive = "home" | "ai-setup" | "dashboard" | "connecto
  * same component, so the same settings are one click away wherever you are.
  * `active` only exists to mark the AI setup row when that shell is already open.
  */
-export function ConfigMenu({ onAiSetup, theme, onToggleTheme, active }: { onAiSetup: () => void; theme: ThemeMode; onToggleTheme: () => void; active?: ProductSidebarActive }) {
+export function ConfigMenu({ onAiSetup, appearance, onSetAppearance, active }: { onAiSetup: () => void; appearance: AppearancePreference; onSetAppearance: (pref: AppearancePreference) => void; active?: ProductSidebarActive }) {
 	const [open, setOpen] = useState(false);
 	const [helpOpen, setHelpOpen] = useState(false);
 	const wrapRef = useRef<HTMLDivElement>(null);
@@ -66,10 +68,11 @@ export function ConfigMenu({ onAiSetup, theme, onToggleTheme, active }: { onAiSe
 			{open && (
 				<div className="sidebar-config-menu" role="menu">
 					<div className="menu-row">
-						<span className="menu-row-label">Theme</span>
-						<div className="menu-theme-seg" role="group" aria-label="Theme">
-							<button className={theme === "dark" ? "on" : ""} aria-pressed={theme === "dark"} onClick={() => theme !== "dark" && onToggleTheme()}>Dark</button>
-							<button className={theme === "light" ? "on" : ""} aria-pressed={theme === "light"} onClick={() => theme !== "light" && onToggleTheme()}>Light</button>
+						<span className="menu-row-label">Appearance</span>
+						<div className="menu-appearance-seg" role="group" aria-label="Appearance">
+							<button className={appearance === "system" ? "on" : ""} aria-pressed={appearance === "system"} title="Follow this device's light or dark setting" onClick={() => onSetAppearance("system")}>System</button>
+							<button className={appearance === "light" ? "on" : ""} aria-pressed={appearance === "light"} onClick={() => onSetAppearance("light")}>Light</button>
+							<button className={appearance === "dark" ? "on" : ""} aria-pressed={appearance === "dark"} onClick={() => onSetAppearance("dark")}>Dark</button>
 						</div>
 					</div>
 					<button
@@ -136,7 +139,7 @@ export function ConfigMenu({ onAiSetup, theme, onToggleTheme, active }: { onAiSe
 	);
 }
 
-export function ProductSidebar({ onHome, onAiSetup, onDashboard, onConnectors, onMemory, onSkills, theme, onToggleTheme, active }: { onHome: () => void; onAiSetup: () => void; onDashboard: () => void; onConnectors?: () => void; onMemory?: () => void; onSkills?: () => void; theme: ThemeMode; onToggleTheme: () => void; active: ProductSidebarActive }) {
+export function ProductSidebar({ onHome, onAiSetup, onDashboard, onConnectors, onMemory, onSkills, theme, appearance, onSetAppearance, active }: { onHome: () => void; onAiSetup: () => void; onDashboard: () => void; onConnectors?: () => void; onMemory?: () => void; onSkills?: () => void; theme: ThemeMode; appearance: AppearancePreference; onSetAppearance: (pref: AppearancePreference) => void; active: ProductSidebarActive }) {
 	return (
 		<aside className="product-sidebar">
 			<div className="product-sidebar-header">
@@ -167,7 +170,7 @@ export function ProductSidebar({ onHome, onAiSetup, onDashboard, onConnectors, o
 			    speaks in words the user can act on. */}
 			<div className="product-sidebar-footer">
 				<div className="sidebar-footer-controls">
-					<ConfigMenu onAiSetup={onAiSetup} theme={theme} onToggleTheme={onToggleTheme} active={active} />
+					<ConfigMenu onAiSetup={onAiSetup} appearance={appearance} onSetAppearance={onSetAppearance} active={active} />
 					<SidebarToggleButton />
 				</div>
 			</div>
