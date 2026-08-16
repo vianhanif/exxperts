@@ -180,6 +180,7 @@ release_install_lock() {
 archive_target() {
 	case "$(uname -s)-$(uname -m)" in
 		Darwin-arm64) printf 'darwin-arm64' ;;
+		Darwin-x86_64) printf 'darwin-x64' ;;
 		Linux-x86_64) printf 'linux-x64' ;;
 		*) return 1 ;;
 	esac

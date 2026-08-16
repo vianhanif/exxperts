@@ -94,13 +94,14 @@ function argValue(flag) {
 const TARGETS = {
 	"win-x64": { platform: "win32", arch: "x64", nodeDist: "win-x64", nodeExt: ".zip", archiveExt: ".zip" },
 	"darwin-arm64": { platform: "darwin", arch: "arm64", nodeDist: "darwin-arm64", nodeExt: ".tar.gz", archiveExt: ".tar.gz" },
+	"darwin-x64": { platform: "darwin", arch: "x64", nodeDist: "darwin-x64", nodeExt: ".tar.gz", archiveExt: ".tar.gz" },
 	"linux-x64": { platform: "linux", arch: "x64", nodeDist: "linux-x64", nodeExt: ".tar.xz", archiveExt: ".tar.gz" },
 };
 
 const target = argValue("--target");
 const outDirArg = argValue("--out");
 if (!target || !outDirArg) {
-	console.error("Usage: node scripts/bundle-release.mjs --target <win-x64|darwin-arm64|linux-x64> --out <dir>");
+	console.error("Usage: node scripts/bundle-release.mjs --target <win-x64|darwin-arm64|darwin-x64|linux-x64> --out <dir>");
 	console.error("       node scripts/bundle-release.mjs --print-node-version");
 	process.exit(2);
 }
